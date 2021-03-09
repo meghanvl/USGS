@@ -5,23 +5,24 @@ function markerSize(data) {
     return data *10;
 }
 
-function markerColor(data) {
-    if (data < 1) {
+function markerColor(earthquakeData) {
+    console.log(earthquakeData)
+    if (earthquakeData < 1) {
         return "blue"
     }
-    else if (data < 2) {
+    else if (earthquakeData < 2) {
         return "orange"
     }
-    else if (data < 3) {
+    else if (earthquakeData < 3) {
         return "green"
     }
-    else if (data < 4) {
+    else if (earthquakeData < 4) {
         return "red"
     }
     else {
         return "purple"
     }
-
+    
 }
 
 d3.json(url, function(data) {
@@ -34,10 +35,10 @@ function createFeatures(earthquakeData) {
     // Define a function we want to run once for each feature in the features array
     // Give each feature a popup describing the place, time and magnitude of the earthquake
     function onEachFeature(feature, layer) {
-      layer.bindPopup("</h3><hr><p>Place: " + feature.properties.place +
-        "</h3><hr><p>Time: " + new Date(feature.properties.time) + "</p>" +
-        "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>" +
-        "</h3><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
+      layer.bindPopup("</h3><hr><b>Place: " + feature.properties.place +
+        "</h3><hr>Time: " + new Date(feature.properties.time) + 
+        "</h3><hr>Magnitude: " + feature.properties.mag + 
+        "</h3><hr>Depth: " + feature.geometry.coordinates[2]);
     }
   
 
