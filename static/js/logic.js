@@ -36,7 +36,8 @@ function createFeatures(earthquakeData) {
     function onEachFeature(feature, layer) {
       layer.bindPopup("</h3><hr><p>Place: " + feature.properties.place +
         "</h3><hr><p>Time: " + new Date(feature.properties.time) + "</p>" +
-        "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>");
+        "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>" +
+        "</h3><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
     }
   
 
@@ -44,7 +45,7 @@ function createFeatures(earthquakeData) {
         const mark = {
             stroke: false,
             radius: markerSize(feature.properties.mag),
-            color: markerColor(feature.properties.mag)
+            color: markerColor(feature.geometry.coordinates[2])
         }
 
         return L.circleMarker(location, mark);
@@ -87,11 +88,11 @@ function createMap(earthquakes) {
     });
 
     function getColor(d) {
-        return d > 5 ? '#ff3333' :
-                d > 4  ? '#ff6633' :
-                d > 3  ? '#ff9933' :
-                d > 2  ? '#ffcc33' :
-                d > 1  ? '#ffff33' :
+        return d > 90 ? '#ff3333' :
+                d > 70  ? '#ff6633' :
+                d > 50  ? '#ff9933' :
+                d > 30  ? '#ffcc33' :
+                d > 10  ? '#ffff33' :
                          '#ccff33';
     }
 
@@ -100,14 +101,14 @@ function createMap(earthquakes) {
     legend.onAdd = function(map) {
   
         const div = L.DomUtil.create('div', 'info legend'),
-        depth = [-10, 1, 30, 50, 70, 90],
+        depth = [-10, 10, 30, 50, 70, 90],
         labels = [];
   
         // loop through our density intervals and generate a label with a colored square for each interval
-        for (var i = 0; i < intervals.length; i++) {
+        for (var i = 0; i < depth.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColor(intervals[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
-                intervals[i] + (intervals[i + 1] ? '&ndash;' + intervals[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColor(depth[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+                depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
         }
   
         return div;
