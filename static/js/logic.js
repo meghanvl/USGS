@@ -29,11 +29,10 @@ function createFeatures(earthquakeData) {
         layer.bindPopup("<b></h3>Place: " + feature.properties.place +
             "</h3><hr>Time: " + new Date(feature.properties.time) + 
             "</h3><hr>Magnitude: " + feature.properties.mag + 
-            "</h3><hr>Depth: " + feature.geometry.coordinates[2] +
+            "</h3><hr>Depth (km): " + feature.geometry.coordinates[2] +
             "</h3><hr>Lat: " + feature.geometry.coordinates[1] + 
             "</h3><hr>Lng: " + feature.geometry.coordinates[0]);
     }
-  
     
     // function to set marker size and color
     function marker(feature) {
@@ -100,7 +99,7 @@ function createMap(earthquakes) {
         // loop through depth intervals and generate a label with a colored square for each interval
         for (var i = 0; i < depth.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + markerColor(depth[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+            '<i style="background-color:' + markerColor(depth[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
                 depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
         }
   
