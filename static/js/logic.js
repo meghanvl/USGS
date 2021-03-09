@@ -22,7 +22,7 @@ function createFeatures(earthquakeData) {
 
     // function to run once for each feature in the features array with a popup describing the place, time, magnitude and depth of the earthquake
     function onEachFeature(feature, layer) {
-      layer.bindPopup("</h3>Place: " + feature.properties.place +
+      layer.bindPopup("<b></h3>Place: " + feature.properties.place +
         "</h3><hr>Time: " + new Date(feature.properties.time) + 
         "</h3><hr>Magnitude: " + feature.properties.mag + 
         "</h3><hr>Depth: " + feature.geometry.coordinates[2]);
@@ -39,17 +39,20 @@ function createFeatures(earthquakeData) {
         return L.circleMarker(location, mark);
     }
 
+    // geoJSON layer containing features array
     const earthquakes = L.geoJSON(earthquakeData, {
         onEachFeature: onEachFeature,
         pointToLayer: marker
     });
 
+    // earthquakes layer to createMap function
     createMap(earthquakes);
 
 }
 
 function createMap(earthquakes) {
 
+    // streetmap layer
     const streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
         tileSize: 512,
@@ -59,15 +62,17 @@ function createMap(earthquakes) {
         accessToken: API_KEY
       });
 
-
+    // basemap object
     const  baseMaps = {
         "Street Map": streetmap
     };
 
+    // overlay object
     const overlayMaps = {
         Earthquakes: earthquakes
     };
 
+    // map object
     const myMap = L.map("mapid", {
         center: [37.09, -95.71],
         zoom: 5,
