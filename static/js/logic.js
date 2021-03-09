@@ -136,21 +136,28 @@ function createMap(earthquakes) {
 
     });
 
+    function getColor(d) {
+        return d > 5 ? '#ff3333' :
+                d > 4  ? '#ff6633' :
+                d > 3  ? '#ff9933' :
+                d > 2  ? '#ffcc33' :
+                d > 1  ? '#ffff33' :
+                         '#ccff33';
+    }
+
     const legend = L.control({position: 'bottomright'});
 
     legend.onAdd = function(map) {
   
         const div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        intervals = [0, 1, 2, 3, 4, 5],
         labels = [];
-
-        div.innerHTML+='Magnitude<br><hr>'
   
         // loop through our density intervals and generate a label with a colored square for each interval
-        for (const i = 0; i < grades.length; i++) {
+        for (var i = 0; i < intervals.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColor(grades[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
-                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                '<i style="background:' + getColor(intervals[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+                intervals[i] + (intervals[i + 1] ? '&ndash;' + intervals[i + 1] + '<br>' : '+');
         }
   
         return div;
