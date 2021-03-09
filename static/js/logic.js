@@ -84,13 +84,12 @@ function createMap(earthquakes) {
     });
 
     // create legend for color of markers based on depth of earthquake
-    const legend = L.control({position: 'bottomright'});
+    const legend = L.control({position: "bottomright"});
 
-    legend.onAdd = function(map) {
-  
-        const div = L.DomUtil.create('div', 'info legend'),
-        depth = [-10, 10, 30, 50, 70, 90],
-        labels = [];
+    legend.onAdd = function() {
+        const div = L.DomUtil.create("div", "info legend");
+        const depth = [-10, 10, 30, 50, 70, 90];
+        const labels = [];
   
         // loop through depth intervals and generate a label with a colored square for each interval
         for (var i = 0; i < depth.length; i++) {
