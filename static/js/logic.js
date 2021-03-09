@@ -136,24 +136,26 @@ function createMap(earthquakes) {
 
     });
 
-    const legend = L.control({ position: "bottomright" });
-    legend.onAdd = function() {
-    const div = L.DomUtil.create("div", "info legend"), 
-      magnitudeGrades = [0, 1, 3, 5],
-      labels = [];
+    const legend = L.control({position: 'bottomright'});
 
-    
-    // Create legend
-    for (const i = 0; i < magnitudeGrades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + markColor(magnitudeGrades[i] + 1) + '"></i> ' +
-            magnitudeGrades[i] + (magnitudeGrades[i + 1] ? '&ndash;' + magnitudeGrades[i + 1] + '<br>' : '+');
-    }
+    legend.onAdd = function(map) {
+  
+        const div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        labels = [];
 
-
-    return div;
-  };
-
+        div.innerHTML+='Magnitude<br><hr>'
+  
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (const i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + getColor(grades[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+  
+        return div;
+    };
+  
   legend.addTo(myMap);
 
   // Add the layer control to the map
