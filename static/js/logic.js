@@ -25,14 +25,20 @@ function createFeatures(earthquakeData) {
     // function to run once for each feature in the features array with a 
     // popup describing the place, time, magnitude and depth of the earthquake
     function onEachFeature(feature, layer) {
-      layer.bindPopup("<b></h3>Place: " + feature.properties.place +
-        "</h3><hr>Time: " + new Date(feature.properties.time) + 
-        "</h3><hr>Magnitude: " + feature.properties.mag + 
-        "</h3><hr>Depth: " + feature.geometry.coordinates[2]);
+        
+        layer.bindPopup("<b></h3>Place: " + feature.properties.place +
+            "</h3><hr>Time: " + new Date(feature.properties.time) + 
+            "</h3><hr>Magnitude: " + feature.properties.mag + 
+            "</h3><hr>Depth: " + feature.geometry.coordinates[2] +
+            "</h3><hr>Lat: " + feature.geometry.coordinates[1] + 
+            "</h3><hr>Lng: " + feature.geometry.coordinates[0]);
     }
   
+    
     // function to set marker size and color
-    function marker(feature, location) {
+    function marker(feature) {
+        const location = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]
+        console.log(location);
         const mark = {
             stroke: false,
             radius: feature.properties.mag * 10,
