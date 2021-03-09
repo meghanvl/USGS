@@ -13,6 +13,8 @@ function markerColor(earthquakeData) {
     
 }
 
+// get request to url, once received send the data.features 
+// object to createFeatures function
 d3.json(url, function(data) {
     createFeatures(data.features);
     console.log(data.features);
@@ -20,7 +22,8 @@ d3.json(url, function(data) {
 
 function createFeatures(earthquakeData) {
 
-    // function to run once for each feature in the features array with a popup describing the place, time, magnitude and depth of the earthquake
+    // function to run once for each feature in the features array with a 
+    // popup describing the place, time, magnitude and depth of the earthquake
     function onEachFeature(feature, layer) {
       layer.bindPopup("<b></h3>Place: " + feature.properties.place +
         "</h3><hr>Time: " + new Date(feature.properties.time) + 
