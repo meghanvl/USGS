@@ -1,21 +1,21 @@
 const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 
-function markerSize(earthquakeData) {
-    return earthquakeData *10;
+function markerSize(data) {
+    return data *10;
 }
 
-function markerColor(earthquakeData) {
-    if (earthquakeData < 1) {
+function markerColor(data) {
+    if (data < 1) {
         return "blue"
     }
-    else if (earthquakeData < 2) {
+    else if (data < 2) {
         return "orange"
     }
-    else if (earthquakeData < 3) {
+    else if (data < 3) {
         return "green"
     }
-    else if (earthquakeData < 4) {
+    else if (data < 4) {
         return "red"
     }
     else {
@@ -32,14 +32,13 @@ d3.json(url, function(data) {
 function createFeatures(earthquakeData) {
 
     // Define a function we want to run once for each feature in the features array
-    // Give each feature a popup describing the place and time of the earthquake
+    // Give each feature a popup describing the place, time and magnitude of the earthquake
     function onEachFeature(feature, layer) {
       layer.bindPopup("<h3>" + feature.properties.place +
         "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
         "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>");
     }
   
-
 
     function marker(feature, location) {
         const mark = {
@@ -58,45 +57,7 @@ function createFeatures(earthquakeData) {
 
     createMap(earthquakes);
 
-    // function radiusSize(magnitude) {
-    //     return magnitude * 2000;
-    // }
-
-    // function circleColors(magnitude) {
-    //     if (magnitude < 1) {
-    //         return "blue"
-    //     }
-    //     else if (magnitude < 2) {
-    //         return "orange"
-    //     }
-    //     else if (magnitude < 3) {
-    //         return "green"
-    //     }
-    //     else if (magnitude < 4) {
-    //         return "red"
-    //     }
-    //     else {
-    //         return "purple"
-    //     }
-        
-    // }
-
-    // const earthquake = L.geoJSON(earthquakeData, {
-    //     pointToLayer: function(earthquakeData, latlng) {
-    //         return L.circle(latlng, {
-    //             radius: radiusSize(earthquakeData.properties.mag),
-    //             color: circleColors(earthquakeData.properties.mag),
-    //             fillOpacity: 1
-
-    //         }); 
-    //     },
-    //     onEachFeature: onEachFeature
-
-    // });
-  
-    // Sending our earthquakes layer to the createMap function
-    
-  }
+}
 
 function createMap(earthquakes) {
 
