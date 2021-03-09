@@ -1,23 +1,15 @@
+// significant earthquake data from past 30 days 
 const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
-
+// function to set marker color based on depth of earthquake
 function markerColor(earthquakeData) {
     console.log(earthquakeData)
-    if (earthquakeData < 10) {
-        return "blue"
-    }
-    else if (earthquakeData < 20) {
-        return "orange"
-    }
-    else if (earthquakeData < 30) {
-        return "green"
-    }
-    else if (earthquakeData < 40) {
-        return "red"
-    }
-    else {
-        return "purple"
-    }
+    return earthquakeData < 10 ? "purple" : 
+    earthquakeData < 20 ? "blue" :
+    earthquakeData < 40 ? "green" :
+    earthquakeData < 60 ? "red" : 
+    earthquakeData < 80 ? "orange" :
+    "yellow" 
     
 }
 
@@ -29,7 +21,7 @@ d3.json(url, function(data) {
 function createFeatures(earthquakeData) {
 
     // Define a function we want to run once for each feature in the features array
-    // Give each feature a popup describing the place, time and magnitude of the earthquake
+    // Give each feature a popup describing the place, time, magnitude and depth of the earthquake
     function onEachFeature(feature, layer) {
       layer.bindPopup("</h3>Place: " + feature.properties.place +
         "</h3><hr>Time: " + new Date(feature.properties.time) + 
@@ -84,14 +76,14 @@ function createMap(earthquakes) {
 
     });
 
-    function getColor(d) {
-        return d > 90 ? '#ff3333' :
-                d > 70  ? '#ff6633' :
-                d > 50  ? '#ff9933' :
-                d > 30  ? '#ffcc33' :
-                d > 10  ? '#ffff33' :
-                         '#ccff33';
-    }
+    // function getColor(d) {
+    //     return d > 90 ? '#ff3333' :
+    //             d > 70  ? '#ff6633' :
+    //             d > 50  ? '#ff9933' :
+    //             d > 30  ? '#ffcc33' :
+    //             d > 10  ? '#ffff33' :
+    //                      '#ccff33';
+    // }
 
     const legend = L.control({position: 'bottomright'});
 
@@ -104,7 +96,7 @@ function createMap(earthquakes) {
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < depth.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getColor(depth[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+                '<i style="background:' + markerColor(depth[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
                 depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
         }
   
