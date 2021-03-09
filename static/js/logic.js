@@ -11,11 +11,11 @@ function createFeatures(earthquakeData) {
     // Give each feature a popup describing the place and time of the earthquake
     function onEachFeature(feature, layer) {
       layer.bindPopup("<h3>" + feature.properties.place +
-        "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+        "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
+        "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>");
     }
   
-    // Create a GeoJSON layer containing the features array on the earthquakeData object
-    // Run the onEachFeature function once for each piece of data in the array
+    
     function radiusSize(magnitude) {
         return magnitude * 2000;
     }
@@ -53,7 +53,7 @@ function createFeatures(earthquakeData) {
     });
   
     // Sending our earthquakes layer to the createMap function
-    createMap(earthquakes);
+    createMap(earthquake);
   }
 
 function createMap(earthquake) {
@@ -65,14 +65,31 @@ function createMap(earthquake) {
     
     
     // Adding tile layer to the map
-    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: "mapbox/streets-v11",
-        accessToken: API_KEY
-    }).addTo(myMap);
+    // L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    //     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    //     tileSize: 512,
+    //     maxZoom: 18,
+    //     zoomOffset: -1,
+    //     id: "mapbox/streets-v11",
+    //     accessToken: API_KEY
+    // }).addTo(myMap);
+
+    const light = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "light-v10",
+    accessToken: API_KEY
+    });
+
+    const  baseMaps = {
+        Light: light
+    };
+
+    const overlayMaps = {
+        Earthquakes: earthquake
+    };
+
+    L.control.layers(baseMaps, overlayMaps).addTo(myMap);
     
 }
 
