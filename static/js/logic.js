@@ -34,8 +34,8 @@ function createFeatures(earthquakeData) {
     // Define a function we want to run once for each feature in the features array
     // Give each feature a popup describing the place, time and magnitude of the earthquake
     function onEachFeature(feature, layer) {
-      layer.bindPopup("<h3>" + feature.properties.place +
-        "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
+      layer.bindPopup("</h3><hr><p>Place: " + feature.properties.place +
+        "</h3><hr><p>Time: " + new Date(feature.properties.time) + "</p>" +
         "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>");
     }
   
@@ -70,17 +70,6 @@ function createMap(earthquakes) {
         accessToken: API_KEY
       });
 
-    
-    // Adding tile layer to the map
-    // L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    //     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    //     tileSize: 512,
-    //     maxZoom: 18,
-    //     zoomOffset: -1,
-    //     id: "mapbox/streets-v11",
-    //     accessToken: API_KEY
-    // }).addTo(myMap);
-
 
     const  baseMaps = {
         "Street Map": streetmap
@@ -111,7 +100,7 @@ function createMap(earthquakes) {
     legend.onAdd = function(map) {
   
         const div = L.DomUtil.create('div', 'info legend'),
-        intervals = [0, 1, 2, 3, 4, 5],
+        depth = [-10, 1, 30, 50, 70, 90],
         labels = [];
   
         // loop through our density intervals and generate a label with a colored square for each interval
