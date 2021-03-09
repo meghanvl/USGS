@@ -1,22 +1,18 @@
 const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 
-function markerSize(data) {
-    return data *10;
-}
-
 function markerColor(earthquakeData) {
     console.log(earthquakeData)
-    if (earthquakeData < 1) {
+    if (earthquakeData < 10) {
         return "blue"
     }
-    else if (earthquakeData < 2) {
+    else if (earthquakeData < 20) {
         return "orange"
     }
-    else if (earthquakeData < 3) {
+    else if (earthquakeData < 30) {
         return "green"
     }
-    else if (earthquakeData < 4) {
+    else if (earthquakeData < 40) {
         return "red"
     }
     else {
@@ -35,7 +31,7 @@ function createFeatures(earthquakeData) {
     // Define a function we want to run once for each feature in the features array
     // Give each feature a popup describing the place, time and magnitude of the earthquake
     function onEachFeature(feature, layer) {
-      layer.bindPopup("</h3><hr><b>Place: " + feature.properties.place +
+      layer.bindPopup("</h3>Place: " + feature.properties.place +
         "</h3><hr>Time: " + new Date(feature.properties.time) + 
         "</h3><hr>Magnitude: " + feature.properties.mag + 
         "</h3><hr>Depth: " + feature.geometry.coordinates[2]);
@@ -45,7 +41,7 @@ function createFeatures(earthquakeData) {
     function marker(feature, location) {
         const mark = {
             stroke: false,
-            radius: markerSize(feature.properties.mag),
+            radius: feature.properties.mag * 10,
             color: markerColor(feature.geometry.coordinates[2])
         }
 
